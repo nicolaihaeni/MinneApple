@@ -4,18 +4,18 @@ import torch.utils.data
 import torchvision
 import numpy as np
 
-from apple_dataset import AppleDataset
+from data.apple_dataset import AppleDataset
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
 
-import utils
-import transforms as T
+import utility.utils as utils
+import utility.transforms as T
+
 
 ######################################################
 # Predict with either a Faster-RCNN or Mask-RCNN predictor
 # using the MinneApple dataset
 ######################################################
-
 def get_transform(train):
     transforms = []
     transforms.append(T.ToTensor())
@@ -54,7 +54,7 @@ def get_frcnn_model_instance(num_classes):
 
 def main(args):
     num_classes = 2
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = args.device
 
     # Load the model from
     print("Loading model")
@@ -85,12 +85,14 @@ def main(args):
     for image, targets in data_loader_test:
         image = list(img.to(device) for img in image)
         outputs = model(image)
-
         for ii, output in enumerate(outputs):
-            print("Predicting on image: {}".format(targets[ii]['image_name']))
+            img_id = targets[ii]['image_id']
+            img_name = data_loader_test.dataset.get_img_name(img_id)
+            print("Predicting on image: {}".format(img_name))
             boxes = output['boxes'].detach().numpy()
             scores = output['scores'].detach().numpy()
-            im_names = np.repeat(targets[ii]['image_name'], len(boxes), axis=0)
+
+            im_names = np.repeat(img_name, len(boxes), axis=0)
             stacked = np.hstack((im_names.reshape(len(scores), 1), boxes.astype(int), scores.reshape(len(scores), 1)))
 
             # File to write predictions to
@@ -103,6 +105,7 @@ if __name__ == "__main__":
     parser.add_argument('--data_path', required=True, help='path to the data to predict on')
     parser.add_argument('--output_file', required=True, help='path where to write the prediction outputs')
     parser.add_argument('--weight_file', required=True, help='path to the weight file')
+    parser.add_argument('--device', default='cpu', help='device to use. Either cpu or cuda')
     model = parser.add_mutually_exclusive_group(required=True)
     model.add_argument('--frcnn', action='store_true', help='use a Faster-RCNN model')
     model.add_argument('--mrcnn', action='store_true', help='use a Mask-RCNN model')

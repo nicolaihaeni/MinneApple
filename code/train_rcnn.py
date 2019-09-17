@@ -8,13 +8,11 @@ import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
 
-from torchvision import transforms
-from apple_dataset import AppleDataset
+from data.apple_dataset import AppleDataset
+from utility.engine import train_one_epoch, evaluate
 
-from engine import train_one_epoch, evaluate
-
-import utils
-import transforms as T
+import utility.utils as utils
+import utility.transforms as T
 
 ######################################################
 # Train either a Faster-RCNN or Mask-RCNN predictor
@@ -60,7 +58,7 @@ def get_frcnn_model_instance(num_classes):
 
 def main(args):
     print(args)
-    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    device = args.device
 
     # Data loading code
     print("Loading data")
