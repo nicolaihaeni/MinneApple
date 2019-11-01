@@ -37,9 +37,50 @@ As of November 1st, 2019 here are our latest models along with their respective 
 # Install necessary packages
 pip install Pillow opencv-python sklearn numpy
 ```
+* Clone this repository and enter it
+```
+git clone https://github.com/nicolaihaeni/MinneApple.git
+cd MinneApple
+```
+
+## Data Loader
+The file ```data/apple_dataset.py``` contains a custom dataset class that allows loading images and masks on the fly and extract bounding boxes and segmentation masks. Modify this class accordingly if you need additional inputs to your network.
 
 ## Training
+To train a network on the MinneApple dataset make sure that you download the dataset first from [here](https://conservancy.umn.edu/handle/11299/206575).
+* Now you can train a Faster RCNN or Mask RCNN network with the commands below.
+```
+# Train Faster RCNN
+python train_rcnn.py --data_path /path/to/MinneApple/dataset --model frcnn --epochs 50 --output-dir /path/to/checkpoint/directory
+# Train Mask RCNN
+python train_rcnn.py --data_path /path/to/MinneApple/dataset --model mrcnn --epochs 50 --output-dir /path/to/checkpoint/directory
+
+```
 
 ## Prediction 
+To use a model for prediction run the following command:
+```
+# Predict for Faster RCNN
+python predict_rcnn.py --data_path /path/to/MinneApple/dataset --output_file /path/to/which/to/write/the/predictions --weight_file /path/to/a/weight/file --device [one out of: cpu/gpu] --frcnn
+# Predict for Mask RCNN
+python predict_rcnn.py --data_path /path/to/MinneApple/dataset --output_file /path/to/which/to/write/the/predictions --weight_file /path/to/a/weight/file --device [one out of: cpu/gpu] --mrcnn
+```
 
 ## Evaluation scripts
+To guarantee a fair comparison of your approach with others we have setup codalab competitions for [fruit detection](https://competitions.codalab.org/competitions/21718), [fruit segmentation](https://competitions.codalab.org/competitions/21694) and [fruit counting](https://competitions.codalab.org/competitions/21719). 
+
+The evaluation servers are result submission only, so make sure to follow the instructions on the respective website.
+The evaluation scripts on the server closely follow the provided evaluation scripts in this codebase.
+
+## Citation
+If you use MinneApple or this code base in your work, please cite
+```
+@misc{hani2019minneapple,
+    title={MinneApple: A Benchmark Dataset for Apple Detection and Segmentation},
+    author={Nicolai Häni and Pravakar Roy and Volkan Isler}
+    year={2019},
+    eprint={1909.06441},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
+```
