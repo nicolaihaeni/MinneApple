@@ -1,5 +1,5 @@
 # MinneApple: A Benchmark Dataset for Apple Detection and Segmentation
-This is the code to our [paper](https://arxiv.org/abs/1909.06441) MinneApple: A Benchmark Dataset for Apple Detection and Segmentation.
+This is the code to our [paper](https://arxiv.org/abs/1909.06441) MinneApple: A Benchmark Dataset for Apple Detection and Segmentation. We provide example scripts for loading data, training Faster RCNN and Mask RCNN on the MinneApple dataset and example evaluation scripts.
 
 <p align="center">
 	<img src="./imgs/concept.png" width="400">
@@ -26,10 +26,17 @@ As of November 1st, 2019 here are our latest models along with their respective 
 ### Apple Counting
 | Method | Backbone | Mean Accurracy | 
 |---|---|---|
-| GMM  |  -  |  0.635 | 
-| CNN  |  ResNet50  |  0.649 |
+| GMM  |  -  |  0.816 | 
+| CNN  |  ResNet50  |  0.908 |
 
 ## Installation
+* Setup a Python 3 environment
+* Install Pytorch (1.0.1 or higher) and TorchVision
+* Install some other packages:
+```
+# Install necessary packages
+pip install Pillow opencv-python sklearn numpy
+```
 
 ## Training
 
