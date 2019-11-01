@@ -17,7 +17,7 @@ As of November 1st, 2019 here are our latest models along with their respective 
 
 ### Apple Segmentation
 | Method | Backbone | IoU | Class IoU (Apple) |  Pixel Accuracy | Class Accuracy (Apple) |
-|---|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|
 | Semi-supervised GMM  |  -  |  0.635 | 0.341 | 0.968  | 0.455  | 
 | User-supervised GMM  |  -  |  0.649 |  0.455 | 0.959  | 0.634  | 
 | UNet (no pretraining)  | ResNet50  | 0.678  |  0.397 | 0.960  | 0.818  | 
@@ -25,7 +25,7 @@ As of November 1st, 2019 here are our latest models along with their respective 
 
 ### Apple Counting
 | Method | Backbone | Mean Accurracy | 
-|---|---|---|---|---|---|---|---|
+|---|---|---|
 | GMM  |  -  |  0.635 | 
 | CNN  |  ResNet50  |  0.649 |
 
