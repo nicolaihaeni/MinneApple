@@ -48,14 +48,6 @@ class AppleDataset(object):
 
             if xmin == xmax or ymin == ymax:
                 continue
-            elif abs(xmax - xmin) < 20:
-                diff = math.ceil(20 - abs(xmax - xmin)) / 2
-                xmax += diff
-                xmin -= diff
-            elif abs(ymax - ymin) < 20:
-                diff = math.ceil(20 - abs(ymax - ymin)) / 2
-                ymax += diff
-                ymin -= diff
 
             xmin = np.clip(xmin, a_min=0, a_max=w)
             xmax = np.clip(xmax, a_min=0, a_max=w)
