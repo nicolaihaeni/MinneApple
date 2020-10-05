@@ -103,7 +103,12 @@ def main(args):
         lr_scheduler.step()
 
         if args.output_dir:
-            torch.save(model.state_dict(), os.path.join(args.output_dir, 'model_{}.pth'.format(epoch)))
+            torch.save({
+            'epoch': epoch,
+            'model': model.state_dict(),
+            'optimizer': optimizer.state_dict(),
+            'lr_scheduler': lr_scheduler.state_dict(),
+            },  os.path.join(args.output_dir, 'model_{}.pth'.format(epoch)))
 
         # evaluate after every epoch
         evaluate(model, data_loader_test, device=device)
